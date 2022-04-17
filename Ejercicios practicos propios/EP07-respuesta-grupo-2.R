@@ -44,54 +44,54 @@ if(!require(rcompanion)){
 #Ha: Las variables género y dificultad están relacionadas.
 
 # Crear tabla de contingencia .
- niño <- c(10 , 1)
- niña <- c(3 , 6)
+niño <- c(10 , 1)
+niña <- c(3 , 6)
 
- tabla <- as.table ( rbind ( niño , niña ))
+tabla <- as.table ( rbind ( niño , niña ))
 
- dimnames ( tabla ) <- list ( genero = c("niño", "niña") ,
-                                dificultad = c("Con dificultades", "Sin dificultades") )
-
-
- print ( tabla )
-
- # Hacer prueba chi - cuadrado de independencia.
- # Se muestra la tabla de frencuencias esperadas.
- prueba <- chisq.test ( tabla )
- cat ("\ nLa prueba internamente calcula los valores esperados :\n")
- esperados <- round ( prueba [["expected"]] , 3)
- print ( esperados )
-
- cat ("\ nResultado de la prueba :\n")
- print ( prueba )
- 
- # No se cumplen las condiciones para realizar la prueba chi-cuadrado,
- # ya que no se cumple las 5 observaciones esperadas en cada grupo.
-
- # Sin embargo, es posible ocupar alternativamente la prueba de Fisher, 
- # para la cual cumple todas las condiciones, que serían tener muestras
- # independientes, tener menos de 5 observaciones esperadas en un grupo
- # y que las variables sean dicotómicas como en este caso.
- 
- dificultad <- c ( rep ( "Con dificultad" , 10) , rep ( "Sin dificultad" , 1)
-                   ,rep("Con dificultad",3),rep("Sin dificultad",6) )
- genero <- c ( rep ( "niño" , 11) , rep ( "niña" , 9) )
- datos <- data.frame ( genero , dificultad )
- tabla <- xtabs (~. , datos )
- print ( tabla )
- # Aplicar prueba exacta de Fisher .
- alfa <- 0.05
- prueba <- fisher.test ( tabla , 1 - alfa )
- print(prueba)
- 
+dimnames ( tabla ) <- list ( genero = c("niño", "niña") ,
+                             dificultad = c("Con dificultades", "Sin dificultades") )
 
 
- # Debido a que el valor de p es igual a 0.017, menor al nivel
- # de significación se puede concluir con 95% que las variables de
- # género y dificultad están relacionadas.
+print ( tabla )
+
+# Hacer prueba chi - cuadrado de independencia.
+# Se muestra la tabla de frencuencias esperadas.
+prueba <- chisq.test ( tabla )
+cat ("\ nLa prueba internamente calcula los valores esperados :\n")
+esperados <- round ( prueba [["expected"]] , 3)
+print ( esperados )
+
+cat ("\ nResultado de la prueba :\n")
+print ( prueba )
+
+# No se cumplen las condiciones para realizar la prueba chi-cuadrado,
+# ya que no se cumple las 5 observaciones esperadas en cada grupo.
+
+# Sin embargo, es posible ocupar alternativamente la prueba de Fisher, 
+# para la cual cumple todas las condiciones, que serían tener muestras
+# independientes, tener menos de 5 observaciones esperadas en un grupo
+# y que las variables sean dicotómicas como en este caso.
+
+dificultad <- c ( rep ( "Con dificultad" , 10) , rep ( "Sin dificultad" , 1)
+                  ,rep("Con dificultad",3),rep("Sin dificultad",6) )
+genero <- c ( rep ( "niño" , 11) , rep ( "niña" , 9) )
+datos <- data.frame ( genero , dificultad )
+tabla <- xtabs (~. , datos )
+print ( tabla )
+# Aplicar prueba exacta de Fisher .
+alfa <- 0.05
+prueba <- fisher.test ( tabla , 1 - alfa )
+print(prueba)
 
 
- #################################################################### 
+
+# Debido a que el valor de p es igual a 0.017, menor al nivel
+# de significación se puede concluir con 95% que las variables de
+# género y dificultad están relacionadas.
+
+
+#################################################################### 
 # 2. Siempre tenaz en su lucha para erradicar a los vampiros de la faz
 # de la tierra, Van Helsing desea probar una vacuna que, según él,
 # causará una grave enfermedad en estos seres una vez que beban la
@@ -114,43 +114,43 @@ if(!require(rcompanion)){
 # ▪ 6 vampiros enfermaron con la sangre que contiene la vacuna,
 #     pero no con la sangre limpia de Van Helsing.
 # ¿Es posible decir que la vacuna de Van Helsing causa una enfermedad en los vampiros?
- ###################################################################################
- 
+###################################################################################
+
 # Para poder resolver esta pregunta es necesario
 # determinar si existe una relación entre la dieta con vacuna y si los vampiros
 # se enferman o no. La prueba de Fisher resulta idónea debido a que las variables
 # son dicotómicas entre sí.
- 
- 
- # Hipótesis:
- 
- #H0: Las variables enfermedad y dieta son independientes entre ellas.
- #Ha: Las variables enfermedad y dieta están relacionadas.
- 
- 
- 
- # Construir la tabla de contingencia.
+
+
+# Hipótesis:
+
+#H0: Las variables enfermedad y dieta son independientes entre ellas.
+#Ha: Las variables enfermedad y dieta están relacionadas.
+
+
+
+# Construir la tabla de contingencia.
 enfermedad <- c(rep ("Sano", 3),rep ("Enfermo", 2) , rep("Enfermo", 2), rep ("Enfermo", 6) )
 dieta <- c(rep("Ambas dietas", 3), rep("Ambas dietas", 2), rep("Dieta Limpia", 2) , rep("Dieta con vacuna", 6) )
 datos <- data.frame ( enfermedad , dieta )
 tabla <- xtabs (~. , datos )
 print ( tabla )
- 
- #Condición esperados
- prueba <- chisq.test ( tabla )
- cat ("\ nLa prueba internamente calcula los valores esperados :\n")
- esperados <- round ( prueba [["expected"]] , 3)
- print ( esperados )
- # No se cumplen las condiciones para realizar la prueba chi-cuadrado,
- # ya que no se cumple las 5 observaciones esperadas en cada grupo.
 
- # Sin embargo, es posible ocupar alternativamente la prueba de Fisher, 
- # para la cual cumple todas las condiciones, que serían tener muestras
- # independientes, tener menos de 5 observaciones esperadas en un grupo
- # y que las variables sean dicotómicas como en este caso.
+#Condición esperados
+prueba <- chisq.test ( tabla )
+cat ("\ nLa prueba internamente calcula los valores esperados :\n")
+esperados <- round ( prueba [["expected"]] , 3)
+print ( esperados )
+# No se cumplen las condiciones para realizar la prueba chi-cuadrado,
+# ya que no se cumple las 5 observaciones esperadas en cada grupo.
+
+# Sin embargo, es posible ocupar alternativamente la prueba de Fisher, 
+# para la cual cumple todas las condiciones, que serían tener muestras
+# independientes, tener menos de 5 observaciones esperadas en un grupo
+# y que las variables sean dicotómicas como en este caso.
 
 
-  # Aplicar prueba exacta de Fisher .
+# Aplicar prueba exacta de Fisher .
 alfa <- 0.05
 prueba <- fisher.test (tabla , 1 - alfa)
 print(prueba)
@@ -187,7 +187,7 @@ nacional <- c(5046, 3421, 706)
 tabla <- as.table ( rbind ( estudiantes , nacional ) )
 
 dimnames ( tabla ) <- list ( grupo = c("Estudiantes ", "Nacional") ,
-                               opinion = c("Aprueba", "Desaprueba", "Ninguna") )
+                             opinion = c("Aprueba", "Desaprueba", "Ninguna") )
 
 print ( tabla )
 
@@ -253,15 +253,15 @@ muestra[muestra == "R"] <- 0
 
 # Llevar matriz de datos a formato largo.
 muestra <- muestra %>% pivot_longer ( c ( "Calculo" , "Algebra" , "Fisica" ) ,
-                                        names_to = "asignaturas" ,
-                                        values_to = "resultado" )
+                                      names_to = "asignaturas" ,
+                                      values_to = "resultado" )
 
 muestra[["Id"]] <- factor(muestra[["Id"]])
 muestra[["asignaturas"]] <- factor(muestra[["asignaturas"]])
 
 # Hacer prueba Q de Cochran.
 prueba <- cochran.qtest ( resultado ~ asignaturas | Id,
-                               data = muestra , alpha = 0.05)
+                          data = muestra , alpha = 0.05)
 
 print (prueba)
 

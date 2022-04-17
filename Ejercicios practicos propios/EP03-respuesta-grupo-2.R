@@ -1,9 +1,11 @@
-# Se cargan los paquetes necesarios, en caso de no estar instalados se instalan.
-#if(!require(dplyr)){
-#  install.packages("dplyr",dependencies = TRUE)
-#  require(dplyr)
-#}
+# Ejercicio prÃ¡ctico NÂ°3
 
+# Grupo NÂ°2
+# Integrantes:
+# Christofer Rodriguez - Christian MÃ©ndez  - Israel Arias
+
+
+# Se carga el paquete para graficar
 if(!require(ggplot2)){
   install.packages("ggplot2",dependencies = TRUE)
   require(ggplot2)
@@ -12,71 +14,71 @@ if(!require(ggplot2)){
 # Se carga el archivo de datos CSV
 poblacion <- read.csv2(file.choose(new = FALSE))
 
-#-----------------Codigo Base---------------------------
-tamaño <- nrow(poblacion)
+#-----------------CÃ³digo Base---------------------------
+tamaÃ±o <- nrow(poblacion)
 ingreso <- as.numeric(poblacion[["ytot"]])
 poda <- 0.2
 q20 <- quantile(ingreso, poda)
 q80 <- quantile(ingreso, 1 - poda)
 ingreso.podado <- ingreso[ingreso > q20 & ingreso < q80]
-tamaño.podado <- length(ingreso.podado)
+tamaÃ±o.podado <- length(ingreso.podado)
 media.ingreso <- mean(ingreso.podado)
-sd.ingreso <- sqrt (sum((ingreso.podado - media.ingreso)^2) / tamaño.podado )
+sd.ingreso <- sqrt (sum((ingreso.podado - media.ingreso)^2) / tamaÃ±o.podado )
 #------------------------------------------------------
 
 # --------- Actividad 1 ------------------------------
 set.seed(590)
-#Se generan los datos con distribución normal
+#Se generan los datos con distribuciÃ³n normal
 ingreso.normal <- rnorm(5000, mean = media.ingreso, sd = sd.ingreso)
-#Se imprime por pantalla la distribución normal conseguida
+#Se imprime por pantalla la distribuciÃ³n normal conseguida
 print(ingreso.normal)
 
 #------------- Actividad 2 ---------------------------
-#Se calcula la media y desviación de los datos normales
+#Se calcula la media y desviaciÃ³n de los datos normales
 media <- mean(ingreso.normal)
 desviacion <- sd(ingreso.normal)
-#Se consigue la distribución z usando la formula Z = (x - media) / desviación
+#Se consigue la distribuciÃ³n z usando la formula Z = (x - media) / desviaciÃ³n
 distribucionZ <- (ingreso.normal - media)/desviacion
-#Se imprime por pantalla la distribución Z conseguida
+#Se imprime por pantalla la distribuciÃ³n Z conseguida
 print(distribucionZ)
 
 #------------- Actividad 3 ---------------------------
-#Se construirá la distribucion Chi cuadrado a partir de la distribución Z, primero con 5 grados con libertad
-#Se inicializa el vector vacio que contendra la distribución
+#Se construirÃ¡ la distribuciÃ³n Chi cuadrado a partir de la distribuciÃ³n Z, primero con 5 grados con libertad
+#Se inicializa el vector vacÃ­o que contendrÃ¡ la distribuciÃ³n
 chiCuadrado5deg <- vector()
 for (i in 1:length(distribucionZ)) {
-  #Se toman 5 variables aleatorias dentro de la distribución Z
+  #Se toman 5 variables aleatorias dentro de la distribuciÃ³n Z
   numerosRandoms <- sample(distribucionZ, 5)
   #Se elevan al cuadrado estas variables
   numerosRandoms <-  numerosRandoms^2
-  #Se suman las variables al cuadrado para conseguir el número en distribucion chi cuadrada
+  #Se suman las variables al cuadrado para conseguir el nÃºmero en distribuciÃ³n chi cuadrada
   sumaCuadrados <- sum(numerosRandoms)
   #Se almacena el valor conseguido en el vector creado previamente
   chiCuadrado5deg[i] <- sumaCuadrados
 }
 
-#De la misma forma se construye la segunda distribución Chi cuadrada, ahora con 9 grados de libertad
+#De la misma forma se construye la segunda distribuciÃ³n Chi cuadrada, ahora con 9 grados de libertad
 chiCuadrado9deg <- vector()
 for (i in 1:length(distribucionZ)) {
-  #Se toman 5 variables aleatorias dentro de la distribución Z
+  #Se toman 5 variables aleatorias dentro de la distribuciÃ³n Z
   numerosRandoms <- sample(distribucionZ, 9)
   #Se elevan al cuadrado estas variables
   numerosRandoms <-  numerosRandoms^2
-  #Se suman las variables al cuadrado para conseguir el número en distribucion chi cuadrada
+  #Se suman las variables al cuadrado para conseguir el nÃºmero en distribuciÃ³n chi cuadrada
   sumaCuadrados <- sum(numerosRandoms)
   #Se almacena el valor conseguido en el vector creado previamente
   chiCuadrado9deg[i] <- sumaCuadrados
 }
 
 #------------- Actividad 4 ---------------------------
-#Se construye la distribución F usando las dos distribuciones Chi cuadrado
+#Se construye la distribuciÃ³n F usando las dos distribuciones Chi cuadrado
 distribucionF <- (chiCuadrado5deg/5)/(chiCuadrado9deg/9)
 
 #------------- Actividad 5 ---------------------------
-#Gráfico para distribución normal usando la librería ggplot2
+#GrÃ¡fico para distribuciÃ³n normal usando la librerÃ­a ggplot2
 #Se convierte el vector con los datos a dataframe
 dnormal <- as.data.frame(ingreso.normal)
-#Se crea el gráfico
+#Se crea el grÃ¡fico
 graficoNormal <- ggplot(dnormal, aes(x = ingreso.normal)) +
   stat_function(fun = dnorm,
                 args = list(mean = mean(dnormal$ingreso.normal),
@@ -86,7 +88,7 @@ graficoNormal <- ggplot(dnormal, aes(x = ingreso.normal)) +
 #Se imprime por pantalla
 print(graficoNormal)
 
-#Gráfico para las dos distribuciones chi cuadrado
+#GrÃ¡fico para las dos distribuciones chi cuadrado
 dcs1 <- as.data.frame(chiCuadrado5deg)
 graficoCs1 <- ggplot(dcs1, aes(x = chiCuadrado5deg)) +
   stat_function(fun = dchisq,
@@ -96,7 +98,7 @@ graficoCs1 <- ggplot(dcs1, aes(x = chiCuadrado5deg)) +
 #Se imprime por pantalla
 print(graficoCs1)
 
-#Segundo gráfico chi cuadrado
+#Segundo grÃ¡fico chi cuadrado
 dcs2 <- as.data.frame(chiCuadrado9deg)
 graficoCs2 <- ggplot(dcs2, aes(x = chiCuadrado9deg)) +
   stat_function(fun = dchisq,
@@ -106,7 +108,7 @@ graficoCs2 <- ggplot(dcs2, aes(x = chiCuadrado9deg)) +
 #Se imprime por pantalla
 print(graficoCs2)
 
-#Gráfico para distribución F
+#GrÃ¡fico para distribuciÃ³n F
 distF <- as.data.frame(distribucionF)
 graficoF<- ggplot(distF, aes(x = distribucionF)) +
   stat_function(fun = df,
@@ -122,57 +124,55 @@ n.repeticiones <- 45
 ensayo <- function(x)
   ifelse(sample(poblacion[["sexo"]], 1) == "Mujer", 1, 0)
 veinte.repeticiones <- sapply(1:n.repeticiones, ensayo)
-
+p <- sum(veinte.repeticiones)/n.repeticiones #probabilidad de exito
 # ----------- Actividad 1 ------------------------
-# Se fijo la semilla en 699 y el número de repeticiones en 45
+# Se fijo la semilla en 699 y el nÃºmero de repeticiones en 45
 
 #------------ Actividad 2 --------------------------
 # n = cantidad de intentos
 n <- 45
-# k = cantidad exacta de exitos en n intentos
-#p = probabilidad de exito, en este caso que la encuesta corresponda a una mujer
-p <- 0.5
+# k = cantidad exacta de Ã©xitos en n intentos
+#p = probabilidad de Ã©xito, en este caso que la encuesta corresponda a una mujer, calculada a partir de los datos
 # Se crea vector
 distribucionBinomial <- vector()
-# Se calcula la distribución binomial
+# Se calcula la distribuciÃ³n binomial
 for (k in 0:n) {
   combinatoria <- factorial(n) / (factorial(k) * (factorial(n-k)))
   probUnicoExito <- p^k* ((1-p)^(n-k))
   # Se calcula el valor de X
   resultadoX <- combinatoria*probUnicoExito
-  #Se almacena en el vector que contendra la ditribución
+  #Se almacena en el vector que contendra la ditribuciÃ³n
   distribucionBinomial[k] <- resultadoX
 }
 
 # ---------------- Actividad 3 --------------------------
 distribucionGeom <- vector()
 for (i in 0:n) {
-  #Se calcula según la formula
+  #Se calcula segÃºn la formula
   resultadoGeom <- ((1-p)^(i-1))*p
   distribucionGeom[i] <- resultadoGeom
 }
 
 # --------------- Actividad 4 -------------------------
-#Se asume k = 2 para encontrar la probabilidad que en n encuestas 2 correspondan
-# a mujeres
-k <-2
+#Se crea la distribuciÃ³n binomial Negativa
 distribucionBinomialN <- vector()
-for(i in 2:n){
-  #Se calcula según la formula
-  combinatoria <- factorial(i-1) / (factorial(k-1) * (factorial((i-1)-(k-1))))
-  probExito <- p^k * ((1-p)^(i-k))
+for(k in 1:n){
+  #Se calcula segÃºn la formula
+  combinatoria <- factorial(n-1) / (factorial(k-1) * (factorial((n-k))))
+  probExito <- p^k * ((1-p)^(n-k))
   resultadoBinomialN <- combinatoria * probExito
-  distribucionBinomialN[i] <- resultadoBinomialN
+  distribucionBinomialN[k] <- resultadoBinomialN
 }
 
 # --------------- Actividad 5 --------------------------
+#GrÃ¡fico DistribuciÃ³n Binomial
+names(distribucionBinomial) <- 1:n.repeticiones
+barplot(distribucionBinomial, main = "DistribuciÃ³n Binomial")
 
-#Gráfico Binomial
-distB <- as.data.frame(distribucionBinomial)
-graficoB <- ggplot(distB, aes(x=distribucionBinomial)) + geom_histogram()
-print(graficoB)
+#GrÃ¡fico DistribuciÃ³n GeomÃ©trica
+names(distribucionGeom) <- 1:n.repeticiones
+barplot(distribucionGeom, main = "DistribuciÃ³n GeomÃ©trica")
 
-#Grafico Binomial negativa
-distBN <- as.data.frame(distribucionBinomialN)
-graficoBN <- ggplot(distBN, aes(x=distribucionBinomialN)) + geom_histogram(binwidth = 0.01)
-print(graficoBN)
+#GrÃ¡fico Binomial Negativa
+names(distribucionBinomialN) <- 1:n.repeticiones
+barplot(distribucionBinomialN, main = "DistribuciÃ³n Binomial Negativa")

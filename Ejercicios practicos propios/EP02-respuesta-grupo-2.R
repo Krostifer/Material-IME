@@ -2,39 +2,41 @@ library(dplyr)
 library(ggpubr)
 library(modeest)
 
-# Grupo N°2
+# Grupo NÂ°2
 # Integrantes:
 # Christofer Rodriguez
-# Christian Méndez
+# Christian MÃ©ndez
 # Israel Arias
 
 #Actividad 1
-datos <- read.csv2("C:\\Users\\yelpa\\Downloads\\EP02 Datos Casen 2017.csv")
+datos <- read.csv2("C:\\Users\\yelpa\\Downloads\\EP02 Datos Casen 2017.csv") #Modificar ruta
+#Las variables que son relevantes para la realizaciÃ³n de la actividad en nuestro caso son sexo de tipo categorica nominal
+#y la segunda vatiable a considerar es ytot de tipo nÃºmerica discreta.
 
 #Actividad 2
 
-#¿Cómo diría que es el ingreso de los hombres de la RM (simétrico/asimétrico, concentrado/disperso, unimodal/multimodal, etc.)?
+#Â¿CÃ³mo dirÃ­a que es el ingreso de los hombres de la RM (simÃ©trico/asimÃ©trico, concentrado/disperso, unimodal/multimodal, etc.)?
 
-#Actividad 3: Discutir y consensuar qué medidas estadísticas (media, mediana, moda, etc.) y qué forma gráfica ayudaría a
+#Actividad 3: Discutir y consensuar quÃ© medidas estadÃ­sticas (media, mediana, moda, etc.) y quÃ© forma grÃ¡fica ayudarÃ­a a
 #responder la pregunta asignada.
 
-#Respuesta: Las medidas estadísticas que nos servirían para poder responder a la pregunta
-#Serían la media, moda y mediana, que permiten conocer la simetria, concentracion y si es uni o multimodal
-#Un histograma debería bastar para poder apreciar gráficamente la distribución de los datos.
+#Respuesta: Las medidas estadÃ­sticas que nos servirÃ­an para poder responder a la pregunta
+#SerÃ­an la media, moda y mediana, que permiten conocer la simetria, concentracion y si es uni o multimodal
+#Un histograma deberÃ­a bastar para poder apreciar grÃ¡ficamente la distribuciÃ³n de los datos.
 
-#4. Construir un script en R que produzca los estadísticos y el gráfico seleccionado.
+#Actividad 4. Construir un script en R que produzca los estadÃ­sticos y el grÃ¡fico seleccionado.
 hombresRM <- datos %>% filter(sexo == "Hombre")
-#Se pone el ingreso total en función de miles de pesos
+#Se pone el ingreso total en funciÃ³n de miles de pesos
 hombresRMAjustado <- hombresRM %>% mutate(ytot = ytot/1000)
 
 # Histograma para el ingreso total
 grafico <- gghistogram ( hombresRMAjustado ,
-                       x = "ytot",
-                       add = "mean",
-                       xlab = "Ingreso total en miles de pesos",
-                       ylab = "Frecuencia",
-                       color = "blue",
-                       fill = "blue")
+                         x = "ytot",
+                         add = "mean",
+                         xlab = "Ingreso total en miles de pesos",
+                         ylab = "Frecuencia",
+                         color = "blue",
+                         fill = "blue")
 
 print (grafico)
 
@@ -53,13 +55,13 @@ cat("La moda es: ",moda)
 #Actividad 5
 #Respuesta:
 # Cada estadistico nos permite conocer la media, moda y mediana del ingreso total para
-# los hombres de la región metropolitana, el histograma permite ver gráficamente los datos
+# los hombres de la regiÃ³n metropolitana, el histograma permite ver grÃ¡ficamente los datos
 # en el cual es posible observar los rangos de ingresos totales en miles de pesos
 # y la frecuencia de estas.
-#Es posible observar que estos datos son asimétricos, debido a que la mayoría se concentra
-# al inicio de la grafica, presentando una asimétria a la izquierda al tener más datos
+#Es posible observar que estos datos son asimÃ©tricos, debido a que la mayorÃ­a se concentra
+# al inicio de la grafica, presentando una asimÃ©tria a la izquierda al tener mÃ¡s datos
 # a la izquierda de la media.
-# También es posible observar que los datos están concentrados, esto queda muy claro 
-#al observar el histograma, ya que la gran mayoría se encuentran en el mismo rango de ingreso.
+# TambiÃ©n es posible observar que los datos estÃ¡n concentrados, esto queda muy claro 
+#al observar el histograma, ya que la gran mayorÃ­a se encuentran en el mismo rango de ingreso.
 # Por otro lado es unimodal, ya que solo hay una moda que corresponde a 11091 pesos que llama
-# la atención al ser datos de menores de edad que tienen ingresos.
+# la atenciÃ³n al ser datos de menores de edad que tienen ingresos.

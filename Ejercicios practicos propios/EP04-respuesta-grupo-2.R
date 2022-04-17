@@ -7,8 +7,8 @@
 
 #Se carga el paquete para graficar
 if(!require(ggpubr)){
- install.packages("ggpubr",dependencies = TRUE)
- require(ggpubr)
+  install.packages("ggpubr",dependencies = TRUE)
+  require(ggpubr)
 }
 
 if(!require(dplyr)){
@@ -66,10 +66,10 @@ alfa <- 0.05
 
 # Se realiza la prueba T de student
 prueba <- t.test (orientales[ ,c("Previo")],
-                   paired = FALSE,
-                   alternative = "less",
-                   mu = 20.32,
-                   conf.level = 1 - alfa)
+                  paired = FALSE,
+                  alternative = "less",
+                  mu = 20.32,
+                  conf.level = 1 - alfa)
 
 print (prueba)
 
@@ -127,11 +127,11 @@ alfa <- 0.05
 
 # Se realiza la prueba T de student
 pruebaNegros <- t.test (x = negros[ ,c("Previo")],
-                  y = negros[ ,c("Posterior")],
-                  paired = TRUE,
-                  alternative = "greater",
-                  mu = 2.27,
-                  conf.level = 1 - alfa)
+                        y = negros[ ,c("Posterior")],
+                        paired = TRUE,
+                        alternative = "greater",
+                        mu = 2.27,
+                        conf.level = 1 - alfa)
 
 print (pruebaNegros)
 
@@ -183,11 +183,11 @@ alfa <- 0.05
 
 # Se realiza la prueba T de student
 pruebaOrientalNegro <- t.test (x = orientales[ ,c("Posterior")],
-                        y = negros[ ,c("Posterior")],
-                        paired = FALSE,
-                        alternative = "greater",
-                        mu = 3.08,
-                        conf.level = 1 - alfa)
+                               y = negros[ ,c("Posterior")],
+                               paired = FALSE,
+                               alternative = "greater",
+                               mu = 3.08,
+                               conf.level = 1 - alfa)
 
 print (pruebaOrientalNegro)
 
